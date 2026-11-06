@@ -1,0 +1,20 @@
+{
+  "name": "skylar-park.com",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal website of Skylar Park: custom WordPress block theme and site plugins.",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "wp-env start",
+    "stop": "wp-env stop",
+    "reset": "wp-env clean all",
+    "wp": "wp-env run cli wp",
+    "lint:php": "composer lint"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^12.1.0"
+  }
+}

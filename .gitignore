@@ -1,0 +1,21 @@
+# Dependencies
+/node_modules/
+/vendor/
+
+# WordPress (never commit core, uploads, or secrets)
+wp-config.php
+wp-content/uploads/
+*.sql
+*.sql.gz
+.env
+.env.*
+
+# wp-env local overrides
+.wp-env.override.json
+
+# Tooling caches
+.phpcs-cache
+*.log
+
+# macOS
+.DS_Store

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="skylar-park.com">
+	<description>WordPress Coding Standards for skylar-park.com</description>
+
+	<file>./themes</file>
+	<file>./mu-plugins</file>
+
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="cache" value=".phpcs-cache"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<!-- Minimum supported versions. -->
+	<config name="minimum_wp_version" value="6.9"/>
+	<config name="testVersion" value="8.1-"/>
+
+	<rule ref="WordPress"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="skylar-park"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="skylar_park"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

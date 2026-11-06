@@ -1,0 +1,20 @@
+/*
+Theme Name:        Skylar Park
+Theme URI:         https://www.skylar-park.com
+Author:            Skylar Park
+Author URI:        https://github.com/pjy990625
+Description:       Custom block theme for skylar-park.com. Built with theme.json, block templates, and patterns. No page builder, no front-end framework.
+Requires at least: 6.9
+Tested up to:      6.9
+Requires PHP:      8.1
+Version:           0.1.0
+License:           GNU General Public License v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       skylar-park
+Tags:              block-patterns, full-site-editing, one-column, accessibility-ready
+*/
+
+/*
+ * Most styling lives in theme.json.
+ * Add CSS here only for things theme.json cannot express yet.
+ */
