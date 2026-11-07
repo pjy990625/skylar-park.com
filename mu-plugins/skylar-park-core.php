@@ -100,6 +100,20 @@ function skylar_park_disable_emojis() {
 add_action( 'init', 'skylar_park_disable_emojis' );
 
 /**
+ * Let pages have a hand-written excerpt.
+ *
+ * The excerpt is used as the meta description (see
+ * skylar_park_get_meta_description()), so pages such as About need the
+ * Excerpt panel in the editor. Without it WordPress auto-trims the content.
+ *
+ * @return void
+ */
+function skylar_park_page_excerpts() {
+	add_post_type_support( 'page', 'excerpt' );
+}
+add_action( 'init', 'skylar_park_page_excerpts' );
+
+/**
  * Build the meta description for the current request.
  *
  * - Singular (case study, post, page): the excerpt, or an auto-trimmed
