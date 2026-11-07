@@ -98,3 +98,100 @@ function skylar_park_disable_emojis() {
 	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 }
 add_action( 'init', 'skylar_park_disable_emojis' );
+
+/**
+ * Build the meta description for the current request.
+ *
+ * - Singular (case study, post, page): the excerpt, or an auto-trimmed
+ *   version of the content when no excerpt is set.
+ * - Front page: Settings > General > Tagline, with a sensible fallback.
+ * - Case study archive: a fixed summary.
+ *
+ * @return string Plain-text description (max ~160 characters), or '' if none.
+ */
+function skylar_park_get_meta_description() {
+	$description = '';
+
+	if ( is_singular() ) {
+		$description = get_the_excerpt( get_queried_object_id() );
+	} elseif ( is_post_type_archive( 'case_study' ) ) {
+		$description = __( 'Case studies of WordPress projects: the problem, the constraints, the solution, and measurable results.', 'skylar-park' );
+	} elseif ( is_front_page() || is_home() ) {
+		$description = get_bloginfo( 'description', 'display' );
+		if ( '' === $description ) {
+			$description = __( 'Skylar Park is a WordPress developer in Vancouver building fast, accessible, multilingual WooCommerce sites and custom block themes.', 'skylar-park' );
+		}
+	}
+
+	$description = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $description ) ) );
+
+	if ( mb_strlen( $description ) > 160 ) {
+		$description = rtrim( mb_substr( $description, 0, 157 ) ) . '…';
+	}
+
+	/**
+	 * Filter the meta description.
+	 *
+	 * @param string $description Plain-text description.
+	 */
+	return (string) apply_filters( 'skylar_park_meta_description', $description );
+}
+
+/**
+ * Print the meta description, Open Graph, and Twitter card tags.
+ *
+ * These control how the site looks in Google results and when a link is
+ * shared on LinkedIn, Slack, etc. Skipped automatically if an SEO plugin
+ * (Yoast SEO, Rank Math, SEOPress, All in One SEO) is active, so the tags
+ * are never printed twice.
+ *
+ * @return void
+ */
+function skylar_park_print_meta_tags() {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'SEOPRESS_VERSION' ) || defined( 'AIOSEO_VERSION' ) ) {
+		return;
+	}
+
+	$description = skylar_park_get_meta_description();
+	$title       = wp_get_document_title();
+	$site_name   = get_bloginfo( 'name', 'display' );
+	$url         = '';
+	$image       = '';
+	$large_image = false;
+	$type        = 'website';
+
+	if ( is_singular() ) {
+		$url = wp_get_canonical_url();
+		if ( has_post_thumbnail() ) {
+			$image       = get_the_post_thumbnail_url( get_queried_object_id(), 'large' );
+			$large_image = (bool) $image;
+		}
+		if ( ! is_page() ) {
+			$type = 'article';
+		}
+	} elseif ( is_post_type_archive( 'case_study' ) ) {
+		$url = get_post_type_archive_link( 'case_study' );
+	} elseif ( is_front_page() || is_home() ) {
+		$url = home_url( '/' );
+	}
+
+	if ( ! $image && has_site_icon() ) {
+		$image = get_site_icon_url( 512 );
+	}
+
+	if ( $description ) {
+		printf( '<meta name="description" content="%s" />' . "\n", esc_attr( $description ) );
+		printf( '<meta property="og:description" content="%s" />' . "\n", esc_attr( $description ) );
+	}
+	printf( '<meta property="og:type" content="%s" />' . "\n", esc_attr( $type ) );
+	printf( '<meta property="og:title" content="%s" />' . "\n", esc_attr( $title ) );
+	printf( '<meta property="og:site_name" content="%s" />' . "\n", esc_attr( $site_name ) );
+	if ( $url ) {
+		printf( '<meta property="og:url" content="%s" />' . "\n", esc_url( $url ) );
+	}
+	if ( $image ) {
+		printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $image ) );
+	}
+	printf( '<meta name="twitter:card" content="%s" />' . "\n", $large_image ? 'summary_large_image' : 'summary' );
+}
+add_action( 'wp_head', 'skylar_park_print_meta_tags', 1 );

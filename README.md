@@ -1,5 +1,7 @@
 # skylar-park.com
 
+[![Lint](https://github.com/pjy990625/skylar-park.com/actions/workflows/lint.yml/badge.svg)](https://github.com/pjy990625/skylar-park.com/actions/workflows/lint.yml)
+
 Source code for [skylar-park.com](https://www.skylar-park.com): a custom WordPress **block theme** plus site-specific functionality, built without a page builder.
 
 ## What's in this repo
@@ -10,9 +12,11 @@ Source code for [skylar-park.com](https://www.skylar-park.com): a custom WordPre
 │   ├── theme.json           Design tokens: colors, spacing, typography, element styles
 │   ├── templates/           front-page, page, single, case study single/archive, 404
 │   ├── parts/               header, footer
-│   └── patterns/            hero, case studies, about, contact, footer
+│   ├── patterns/            hero, case studies, about, contact, footer
+│   └── assets/favicon.svg   Fallback favicon (until a Site Icon is set)
+├── .github/workflows/       CI: PHP syntax, PHPCS, JSON validation
 ├── mu-plugins/
-│   └── skylar-park-core.php Case Study post type + performance tweaks
+│   └── skylar-park-core.php Case Study post type, SEO meta tags, performance tweaks
 ├── .wp-env.json             Local WordPress (Docker) config
 ├── composer.json            PHPCS + WordPress Coding Standards
 └── phpcs.xml.dist           Lint rules
@@ -57,6 +61,17 @@ Other commands:
 2. The editor pre-fills the structure: **Problem → Constraints → Solution → Result → Trade-offs**.
 3. Fill in the **Excerpt** (shown on cards) and a **Featured image**.
 4. Anonymize client names unless you have written permission.
+
+## SEO and sharing
+
+`mu-plugins/skylar-park-core.php` prints a meta description plus Open Graph and Twitter card tags, which control how links look in Google, LinkedIn, and Slack.
+
+- **Home page:** uses **Settings → General → Tagline**.
+- **Case studies, posts, pages:** use the **Excerpt**, or the start of the content if no excerpt is set. The **Featured image** becomes the share image.
+- If an SEO plugin (Yoast, Rank Math, SEOPress, AIOSEO) is activated later, these tags turn off automatically so nothing is printed twice.
+- WordPress core already provides `robots.txt` and `/wp-sitemap.xml`.
+
+**Favicon:** set it in **Settings → General → Site Icon** (512×512 PNG). Until then, `assets/favicon.svg` is used.
 
 ## Deployment
 
