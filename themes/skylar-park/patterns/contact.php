@@ -3,16 +3,12 @@
  * Title: Contact
  * Slug: skylar-park/contact
  * Categories: skylar-park, call-to-action
- * Description: Contact section with links to GitHub, LinkedIn, and WordPress.org.
+ * Description: Contact section with links to LinkedIn, GitHub, and WordPress.org.
  * Keywords: contact, links, social
  *
  * @package SkylarPark
  */
 
-/*
- * TODO: add your WordPress.org profile link once it is set up,
- * e.g. https://profiles.wordpress.org/your-username/
- */
 ?>
 <!-- wp:group {"anchor":"contact","align":"full","backgroundColor":"surface","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <div id="contact" class="wp-block-group alignfull has-surface-background-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
@@ -31,6 +27,9 @@
 		<!-- /wp:list-item -->
 		<!-- wp:list-item -->
 		<li><a href="https://github.com/pjy990625" rel="me">GitHub</a></li>
+		<!-- /wp:list-item -->
+		<!-- wp:list-item -->
+		<li><a href="https://profiles.wordpress.org/skylarpark/" rel="me">WordPress.org</a></li>
 		<!-- /wp:list-item -->
 	</ul>
 	<!-- /wp:list -->
